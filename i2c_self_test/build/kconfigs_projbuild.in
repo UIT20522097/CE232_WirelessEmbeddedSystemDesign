@@ -1,0 +1,5 @@
+source "C:/Users/Kelly/Downloads/Workspace/ESP_IDF/esp-idf/components/app_update/Kconfig.projbuild"
+source "C:/Users/Kelly/Downloads/Workspace/ESP_IDF/esp-idf/components/bootloader/Kconfig.projbuild"
+source "C:/Users/Kelly/Downloads/Workspace/ESP_IDF/esp-idf/components/esptool_py/Kconfig.projbuild"
+source "C:/Users/Kelly/Downloads/Workspace/ESP_IDF/esp-idf/components/partition_table/Kconfig.projbuild"
+source "C:/Users/Kelly/Downloads/Workspace/ESP_IDF/esp-idf/examples/peripherals/i2c/i2c_self_test/main/Kconfig.projbuild"
