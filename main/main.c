@@ -9,14 +9,14 @@
 
 static const char *TAG = "ssd1306-example";
 
-#define DATA_LENGTH 512                  /*!< Data buffer length of test buffer */
-#define RW_TEST_LENGTH 128               /*!< Data length for r/w test, [0,DATA_LENGTH] */
-#define DELAY_TIME_BETWEEN_ITEMS_MS 1000 /*!< delay time between different test items */
+#define DATA_LENGTH 512                                       /*!< Data buffer length of test buffer */
+#define RW_TEST_LENGTH 128                                    /*!< Data length for r/w test, [0,DATA_LENGTH] */
+#define DELAY_TIME_BETWEEN_ITEMS_MS 1000                      /*!< delay time between different test items */
 
-#define I2C_MASTER_SCL_IO 22               /*!< gpio number for I2C master clock */
-#define I2C_MASTER_SDA_IO 21               /*!< gpio number for I2C master data  */
+#define I2C_MASTER_SCL_IO 22                                  /*!< gpio number for I2C master clock */
+#define I2C_MASTER_SDA_IO 21                                  /*!< gpio number for I2C master data  */
 #define I2C_MASTER_NUM I2C_NUM_0                              /*!< I2C port number for master dev */
-#define I2C_MASTER_FREQ_HZ 400000 //CONFIG_I2C_MASTER_FREQUENCY        /*!< I2C master clock frequency */
+#define I2C_MASTER_FREQ_HZ 400000 					          /*!< I2C master clock frequency */
 #define I2C_MASTER_TX_BUF_DISABLE 0                           /*!< I2C master doesn't need buffer */
 #define I2C_MASTER_RX_BUF_DISABLE 0                           /*!< I2C master doesn't need buffer */
 #define I2C_MASTER_TIMEOUT_MS 1000                            /*!< I2C master timeout value */
@@ -69,58 +69,6 @@ void ssd1306_init() {
 		ESP_LOGE(TAG, "OLED configuration failed. code: 0x%.2X", espRc);
 	}
 	i2c_cmd_link_delete(cmd);
-}
-
-void task_ssd1306_display_text(const void *arg_text) {
-	char *text = (char*)arg_text;
-	uint8_t text_len = strlen(text);
-
-	i2c_cmd_handle_t cmd;
-
-	uint8_t cur_page = 0;
-
-	cmd = i2c_cmd_link_create();
-	i2c_master_start(cmd);
-	i2c_master_write_byte(cmd, (OLED_I2C_ADDRESS << 1) | I2C_MASTER_WRITE, true);
-
-	i2c_master_write_byte(cmd, OLED_CONTROL_BYTE_CMD_STREAM, true);
-	i2c_master_write_byte(cmd, 0x00, true); // reset column - choose column --> 0
-	i2c_master_write_byte(cmd, 0x10, true); // reset line - choose line --> 0
-	i2c_master_write_byte(cmd, 0xB0 | cur_page, true); // reset page
-
-	i2c_master_stop(cmd);
-	i2c_master_cmd_begin(I2C_NUM_0, cmd, 10/portTICK_PERIOD_MS);
-	i2c_cmd_link_delete(cmd);
-
-	for (uint8_t i = 0; i < text_len; i++) {
-		if (text[i] == '\n') {
-			cmd = i2c_cmd_link_create();
-			i2c_master_start(cmd);
-			i2c_master_write_byte(cmd, (OLED_I2C_ADDRESS << 1) | I2C_MASTER_WRITE, true);
-
-			i2c_master_write_byte(cmd, OLED_CONTROL_BYTE_CMD_STREAM, true);
-			i2c_master_write_byte(cmd, 0x00, true); // reset column
-			i2c_master_write_byte(cmd, 0x10, true);
-			i2c_master_write_byte(cmd, 0xB0 | ++cur_page, true); // increment page
-
-			i2c_master_stop(cmd);
-			i2c_master_cmd_begin(I2C_NUM_0, cmd, 10/portTICK_PERIOD_MS);
-			i2c_cmd_link_delete(cmd);
-		} else {
-			cmd = i2c_cmd_link_create();
-			i2c_master_start(cmd);
-			i2c_master_write_byte(cmd, (OLED_I2C_ADDRESS << 1) | I2C_MASTER_WRITE, true);
-
-			i2c_master_write_byte(cmd, OLED_CONTROL_BYTE_DATA_STREAM, true);
-			i2c_master_write(cmd, font8x8_basic_tr[(uint8_t)text[i]], 8, true);
-
-			i2c_master_stop(cmd);
-			i2c_master_cmd_begin(I2C_NUM_0, cmd, 10/portTICK_PERIOD_MS);
-			i2c_cmd_link_delete(cmd);
-		}
-	}
-
-	vTaskDelete(NULL);
 }
 
 void task_ssd1306_display_clear(void *ignore) {
@@ -184,34 +132,17 @@ void task_ssd1306_display_data(const uint8_t *data, uint16_t data_len) {
 		i2c_master_start(cmd);
 		i2c_master_write_byte(cmd, (OLED_I2C_ADDRESS << 1) | I2C_MASTER_WRITE, true);
 		i2c_master_write_byte(cmd, OLED_CONTROL_BYTE_DATA_STREAM, true);
-        // Hàm reverse bit
-        /* int reverse_bit(uint8_t data[i]) {
-            uint8_t output = 0;
-            int data_bits = sizeof(data[i])*8;
-            for(int m=0; m < data_bits;m++){
-                output <<=1;
-                output |= data[i]&1;
-                data[i] >>=1;
-            }
-            return output;
-        } */
 		i2c_master_write_byte(cmd, data[i], true);
-        // i2c_master_write_byte(cmd, reverse_bit(data[i]), true);
-
 		i2c_master_stop(cmd);
 		i2c_master_cmd_begin(I2C_NUM_0, cmd, 10/portTICK_PERIOD_MS);
 		i2c_cmd_link_delete(cmd);
 	}
-
 	vTaskDelete(NULL);
 }
 
 void app_main(void) {
-    //char* text = "20522097\n20520555\n20521738\n20522051";
     ESP_ERROR_CHECK(i2c_master_init());
     ssd1306_init();
-    //task_ssd1306_display_clear(NULL);
-    //task_ssd1306_display_text(text);
     task_ssd1306_display_data(image_data_logo_uit, 1024);
     while(1) {
         vTaskDelay(1000 / portTICK_PERIOD_MS);
