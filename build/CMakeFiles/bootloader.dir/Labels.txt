@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+X:/Courses/WirelessEmbeddedSystemDesign/Practice/huybranchlab2/build/CMakeFiles/bootloader
+X:/Courses/WirelessEmbeddedSystemDesign/Practice/huybranchlab2/build/CMakeFiles/bootloader.rule
+X:/Courses/WirelessEmbeddedSystemDesign/Practice/huybranchlab2/build/CMakeFiles/bootloader-complete.rule
+X:/Courses/WirelessEmbeddedSystemDesign/Practice/huybranchlab2/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+X:/Courses/WirelessEmbeddedSystemDesign/Practice/huybranchlab2/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+X:/Courses/WirelessEmbeddedSystemDesign/Practice/huybranchlab2/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+X:/Courses/WirelessEmbeddedSystemDesign/Practice/huybranchlab2/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+X:/Courses/WirelessEmbeddedSystemDesign/Practice/huybranchlab2/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+X:/Courses/WirelessEmbeddedSystemDesign/Practice/huybranchlab2/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+X:/Courses/WirelessEmbeddedSystemDesign/Practice/huybranchlab2/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
