@@ -1,5 +1,5 @@
 // IP Server Address:
-const IP_SERVER = 'http://http://35.198.193.139:3001/';
+const IP_SERVER = 'http://35.198.193.139:3001/';
 
 /*
     @ URL - Values(A number) of the sensors:

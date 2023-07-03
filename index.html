@@ -25,7 +25,7 @@
   <body>
     <div class="body-web">
       <div>
-        <h2>DIGITAL CLOCK</h2>
+        <h2 class="clock-title">DIGITAL CLOCK</h2>
         <div class="clock">
           <div>
             <span id="hour">00</span>
@@ -97,7 +97,7 @@
       <div class="controller-buttons">
         <div class="toggle-button-cover">
           <div class="button-cover">
-            <h2>Bơm</h2>
+            <h2 class="controller-title">Bơm</h2>
             <div class="button r" id="button-1">
               <input
                 type="checkbox"
@@ -111,7 +111,7 @@
         </div>
         <div class="toggle-button-cover">
           <div class="button-cover">
-            <h2>Quạt</h2>
+            <h2 class="controller-title">Quạt</h2>
             <div class="button r" id="button-1">
               <input
                 type="checkbox"
@@ -125,7 +125,7 @@
         </div>
         <div class="toggle-button-cover">
           <div class="button-cover">
-            <h2>Đèn</h2>
+            <h2 class="controller-title">Đèn</h2>
             <div class="button r" id="button-1">
               <input
                 type="checkbox"
@@ -138,37 +138,43 @@
           </div>
         </div>
       </div>
+
+      <div class="chart-column">
+        <div class="chart-row">
+          <iframe
+            id="temp-chart"
+            width="450"
+            height="260"
+            style="border: 1px solid #cccccc"
+            src="https://thingspeak.com/channels/2188986/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Bi%E1%BB%83u+%C4%91%E1%BB%93+nhi%E1%BB%87t+%C4%91%E1%BB%99&type=line"
+          ></iframe>
+          <iframe
+            id="temp-chart"
+            width="450"
+            height="260"
+            style="border: 1px solid #cccccc"
+            src="https://thingspeak.com/channels/2188986/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Bi%E1%BB%83u+%C4%91%E1%BB%93+nhi%E1%BB%87t+%C4%91%E1%BB%99&type=line"
+          ></iframe>
+        </div>
+        <div class="chart-row">
+          <iframe
+            id="temp-chart"
+            width="450"
+            height="260"
+            style="border: 1px solid #cccccc"
+            src="https://thingspeak.com/channels/2188986/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Bi%E1%BB%83u+%C4%91%E1%BB%93+nhi%E1%BB%87t+%C4%91%E1%BB%99&type=line"
+          ></iframe>
+          <iframe
+            id="temp-chart"
+            width="450"
+            height="260"
+            style="border: 1px solid #cccccc"
+            src="https://thingspeak.com/channels/2188986/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Bi%E1%BB%83u+%C4%91%E1%BB%93+nhi%E1%BB%87t+%C4%91%E1%BB%99&type=line"
+          ></iframe>
+        </div>
+      </div>
     </div>
-    <div class="chart-row">
-      <iframe
-        id="temp-chart"
-        width="450"
-        height="260"
-        style="border: 1px solid #cccccc"
-        src="https://thingspeak.com/channels/2188986/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Bi%E1%BB%83u+%C4%91%E1%BB%93+nhi%E1%BB%87t+%C4%91%E1%BB%99&type=line"
-      ></iframe>
-      <iframe
-        id="temp-chart"
-        width="450"
-        height="260"
-        style="border: 1px solid #cccccc"
-        src="https://thingspeak.com/channels/2188986/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Bi%E1%BB%83u+%C4%91%E1%BB%93+nhi%E1%BB%87t+%C4%91%E1%BB%99&type=line"
-      ></iframe>
-      <iframe
-        id="temp-chart"
-        width="450"
-        height="260"
-        style="border: 1px solid #cccccc"
-        src="https://thingspeak.com/channels/2188986/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Bi%E1%BB%83u+%C4%91%E1%BB%93+nhi%E1%BB%87t+%C4%91%E1%BB%99&type=line"
-      ></iframe>
-      <iframe
-        id="temp-chart"
-        width="450"
-        height="260"
-        style="border: 1px solid #cccccc"
-        src="https://thingspeak.com/channels/2188986/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Bi%E1%BB%83u+%C4%91%E1%BB%93+nhi%E1%BB%87t+%C4%91%E1%BB%99&type=line"
-      ></iframe>
-    </div>
+
     <script src="./assets/source.js"></script>
   </body>
 </html>

@@ -6,17 +6,14 @@
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  height: 100vh;
-  width: 100vw;
-}
-
-html,
-body {
   height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow:scroll;
+  background: url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80");
 }
 
 .body-web {
@@ -24,6 +21,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: scroll;
 }
 
 .body-row {
@@ -109,13 +107,25 @@ body {
   flex-direction: row;
 }
 
+.humidity-info{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .temp-info,
-.air-humidity-info,
-.soil-moisture-info,
+.humidity-info,
 .light-intensity-info {
   text-align: center;
   font-weight: 800;
   font-size: 34px;
+  align-self: center;
+}
+
+.air-humidity-info,
+.soil-moisture-info {
+  font-weight: 800;
+  font-size: 28px;
 }
 
 .temp,
@@ -182,19 +192,7 @@ body > span {
   background-color: rgb(145, 217, 223);
 }
 
-/* clock*/
-body {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  justify-content: center;
-  overflow: hidden;
-  background-size: cover;
-  background: url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80");
-}
-h2 {
+.clock-title {
   font-size: 40px;
   text-transform: capitalize;
   word-spacing: 4px;
@@ -240,11 +238,16 @@ h2 {
   background: rgb(138, 147, 234);
 }
 
-@media (max-height: 1700px) {
-  .chart-row {
-    display: flex;
-    flex-direction: column;
-  }
+.chart-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.chart-column {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 /* CSS rules are kept repetitive so that you can get CSS rules for each button easily :) */
@@ -346,7 +349,7 @@ h2 {
 
 /* Button 1 */
 #button-1 .knobs:before {
-  content: "YES";
+  content: "ON";
   position: absolute;
   top: 4px;
   left: 4px;
@@ -364,7 +367,7 @@ h2 {
 }
 
 #button-1 .checkbox:checked + .knobs:before {
-  content: "NO";
+  content: "OFF";
   left: 42px;
   background-color: #f44336;
 }
@@ -377,4 +380,13 @@ h2 {
 #button-1 .knobs:before,
 #button-1 .layer {
   transition: 0.3s ease all;
+}
+
+.controller-title {
+  font-size: 40px;
+  text-transform: capitalize;
+  word-spacing: 4px;
+  letter-spacing: 4px;
+  text-align: center;
+  color: rgb(24, 25, 25);
 }

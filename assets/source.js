@@ -1,5 +1,5 @@
 // IP Server Address:
-const IP_SERVER = "http://http://35.198.193.139:3001/";
+const IP_SERVER = "http://35.198.193.139:3001/";
 
 /*
     @ URL - Values(A number) of the sensors:
@@ -56,10 +56,11 @@ updateClock();
 
 const getTemp = async () => {
   try {
-    const url = URL_AIR_TEMPERATURE;
-    const res = await fetch(url);
+    const res = await fetch(URL_AIR_HUMIDITY);
+
     const data = await res.json();
-    return data.feeds;
+    console.log("res", data);
+    return data.value;
   } catch (error) {
     console.log("error", error);
   }
@@ -67,17 +68,11 @@ const getTemp = async () => {
 
 const renderTemp = async () => {
   document.querySelector("#temp").value = "";
-  let res;
   try {
     const dataTemp = await getTemp();
     const temp = document.getElementById("temp");
-    for (let i = dataTemp.length - 1; i >= 0; i--) {
-      if (/^\d+$/.test(dataTemp[i].field1)) {
-        res = dataTemp[i];
-        i = -1;
-      }
-    }
-    temp.innerHTML = res?.field1 + "&deg;C" || 30 + "&deg;C";
+
+    temp.innerHTML = dataTemp + "&deg;C" || 30 + "&deg;C";
   } catch (err) {
     console.log("err", err);
   }
@@ -85,10 +80,9 @@ const renderTemp = async () => {
 
 const getAirHudmity = async () => {
   try {
-    const url = URL_AIR_HUMIDITY;
-    const res = await fetch(url);
+    const res = await fetch(URL_AIR_HUMIDITY);
     const data = await res.json();
-    return data.feeds;
+    return data.value;
   } catch (error) {
     console.log("error", error);
   }
@@ -96,17 +90,11 @@ const getAirHudmity = async () => {
 
 const renderAirHumidity = async () => {
   document.querySelector("#air-humidity").value = "";
-  let res;
   try {
     const dataHumidity = await getAirHudmity();
     const humidity = document.getElementById("air-humidity");
-    for (let i = dataHumidity.length - 1; i >= 0; i--) {
-      if (/^\d+$/.test(dataHumidity[i].field1)) {
-        res = dataHumidity[i];
-        i = -1;
-      }
-    }
-    humidity.innerHTML = res?.field1 + " %" || 30 + " %";
+
+    humidity.innerHTML = dataHumidity + " %" || 30 + " %";
   } catch (err) {
     console.log("err", err);
   }
@@ -114,10 +102,9 @@ const renderAirHumidity = async () => {
 
 const getSoilMoisture = async () => {
   try {
-    const url = URL_SOIL_MOISTURE;
-    const res = await fetch(url);
+    const res = await fetch(URL_SOIL_MOISTURE);
     const data = await res.json();
-    return data.feeds;
+    return data.value;
   } catch (error) {
     console.log("error", error);
   }
@@ -125,17 +112,11 @@ const getSoilMoisture = async () => {
 
 const renderSoilMoisture = async () => {
   document.querySelector("#soil-moisture").value = "";
-  let res;
   try {
     const dataSoilMoisture = await getSoilMoisture();
     const soilMoisture = document.getElementById("soil-moisture");
-    for (let i = dataSoilMoisture.length - 1; i >= 0; i--) {
-      if (/^\d+$/.test(dataSoilMoisture[i].field1)) {
-        res = dataSoilMoisture[i];
-        i = -1;
-      }
-    }
-    soilMoisture.innerHTML = res?.field1 + " %" || 30 + " %";
+
+    soilMoisture.innerHTML = dataSoilMoisture + " %" || 30 + " %";
   } catch (err) {
     console.log("err", err);
   }
@@ -143,10 +124,9 @@ const renderSoilMoisture = async () => {
 
 const getLightIntensity = async () => {
   try {
-    const url = URL_LIGHT_INTENSITY;
-    const res = await fetch(url);
+    const res = await fetch(URL_LIGHT_INTENSITY);
     const data = await res.json();
-    return data.feeds;
+    return data.value;
   } catch (error) {
     console.log("error", error);
   }
@@ -154,17 +134,11 @@ const getLightIntensity = async () => {
 
 const renderLightIntensity = async () => {
   document.querySelector("#light-intensity").value = "";
-  let res;
   try {
     const dataLightIntensity = await getLightIntensity();
     const lightIntensity = document.getElementById("light-intensity");
-    for (let i = dataLightIntensity.length - 1; i >= 0; i--) {
-      if (/^\d+$/.test(dataLightIntensity[i].field1)) {
-        res = dataLightIntensity[i];
-        i = -1;
-      }
-    }
-    lightIntensity.innerHTML = res?.field1 + " Lux" || 30 + " Lux";
+
+    lightIntensity.innerHTML = dataLightIntensity + " Lux" || 30 + " Lux";
   } catch (err) {
     console.log("err", err);
   }
@@ -185,10 +159,13 @@ setInterval(() => {
 const changeFanState = async (input) => {
   try {
     const response = await fetch(URL_FAN, {
-      method: "post",
-      body: {
-        state: input,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        state: input,
+      }),
     });
     console.log("Completed!", response);
   } catch (err) {
@@ -199,10 +176,13 @@ const changeFanState = async (input) => {
 const changeWaterState = async (input) => {
   try {
     const response = await fetch(URL_WATER_PUMP, {
-      method: "post",
-      body: {
-        state: input,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        state: input,
+      }),
     });
     console.log("Completed!", response);
   } catch (err) {
@@ -213,10 +193,13 @@ const changeWaterState = async (input) => {
 const changeLightState = async (input) => {
   try {
     const response = await fetch(URL_LIGHT, {
-      method: "post",
-      body: {
-        state: input,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        state: input,
+      }),
     });
     console.log("Completed!", response);
   } catch (err) {
@@ -230,6 +213,7 @@ function handleFan(checkbox) {
   } else {
     changeFanState(true);
   }
+  console.log(checkbox.checked);
 }
 
 function handleWater(checkbox) {
