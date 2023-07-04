@@ -56,10 +56,9 @@ updateClock();
 
 const getTemp = async () => {
   try {
-    const res = await fetch(URL_AIR_HUMIDITY);
+    const res = await fetch(URL_AIR_TEMPERATURE);
 
     const data = await res.json();
-    console.log("res", data);
     return data.value;
   } catch (error) {
     console.log("error", error);
@@ -80,7 +79,7 @@ const renderTemp = async () => {
 
 const getAirHudmity = async () => {
   try {
-    const res = await fetch(URL_AIR_HUMIDITY);
+    const res = await fetch('/air_humidity');
     const data = await res.json();
     return data.value;
   } catch (error) {
@@ -102,7 +101,7 @@ const renderAirHumidity = async () => {
 
 const getSoilMoisture = async () => {
   try {
-    const res = await fetch(URL_SOIL_MOISTURE);
+    const res = await fetch('/soil_moisture');
     const data = await res.json();
     return data.value;
   } catch (error) {
@@ -124,7 +123,7 @@ const renderSoilMoisture = async () => {
 
 const getLightIntensity = async () => {
   try {
-    const res = await fetch(URL_LIGHT_INTENSITY);
+    const res = await fetch('/light_intensity');
     const data = await res.json();
     return data.value;
   } catch (error) {
@@ -154,7 +153,7 @@ setInterval(() => {
   renderAirHumidity();
   renderSoilMoisture();
   renderLightIntensity();
-}, 2000);
+}, 20000);
 
 const changeFanState = async (input) => {
   try {
