@@ -23,7 +23,7 @@ const URL_FAN = IP_SERVER + "fan";
 const URL_WATER_PUMP = IP_SERVER + "water_pump";
 const URL_LIGHT = IP_SERVER + "light";
 
-const URL_NOW = "/now";
+const URL_NOW = IP_SERVER + "now";
 
 const hourEl = document.getElementById("hour");
 const minuteEl = document.getElementById("minutes");
@@ -60,7 +60,8 @@ const getNow = async () => {
   try {
     const res = await fetch(URL_NOW);
     const data = await res.json();
-    console.log(data)
+    console.log(data);
+
     return data;
   } catch (error) {
     console.log("error", error);
@@ -80,118 +81,27 @@ const renderNow = async () => {
     const soilMoisture = document.getElementById("soil-moisture");
     const lightIntensity = document.getElementById("light-intensity");
 
+    const pump = document.getElementById("checkbox-pump");
+    const fan = document.getElementById("checkbox-fan");
+    const light = document.getElementById("checkbox-light");
+
     temp.innerHTML = data.air_temperature + "&deg;C" || 30 + "&deg;C";
     humidity.innerHTML = data.air_humidity + " %" || 30 + " %";
     soilMoisture.innerHTML = data.soil_moisture + " %" || 30 + " %";
     lightIntensity.innerHTML = data.light_intensity + " Lux" || 30 + " Lux";
 
+    pump.checked = data.water_pump;
+    fan.checked = data.fan;
+    light.checked = data.light;
   } catch (err) {
     console.log("err", err);
   }
 };
 
-// const getTemp = async () => {
-//   try {
-//     const res = await fetch(URL_AIR_TEMPERATURE);
-
-//     const data = await res.json();
-//     return data.value;
-//   } catch (error) {
-//     console.log("error", error);
-//   }
-// };
-
-// const renderTemp = async () => {
-//   document.querySelector("#temp").value = "";
-//   try {
-//     const dataTemp = await getTemp();
-//     const temp = document.getElementById("temp");
-
-//     temp.innerHTML = dataTemp + "&deg;C" || 30 + "&deg;C";
-//   } catch (err) {
-//     console.log("err", err);
-//   }
-// };
-
-// const getAirHudmity = async () => {
-//   try {
-//     const res = await fetch('/air_humidity');
-//     const data = await res.json();
-//     return data.value;
-//   } catch (error) {
-//     console.log("error", error);
-//   }
-// };
-
-// const renderAirHumidity = async () => {
-//   document.querySelector("#air-humidity").value = "";
-//   try {
-//     const dataHumidity = await getAirHudmity();
-//     const humidity = document.getElementById("air-humidity");
-
-//     humidity.innerHTML = dataHumidity + " %" || 30 + " %";
-//   } catch (err) {
-//     console.log("err", err);
-//   }
-// };
-
-// const getSoilMoisture = async () => {
-//   try {
-//     const res = await fetch('/soil_moisture');
-//     const data = await res.json();
-//     return data.value;
-//   } catch (error) {
-//     console.log("error", error);
-//   }
-// };
-
-// const renderSoilMoisture = async () => {
-//   document.querySelector("#soil-moisture").value = "";
-//   try {
-//     const dataSoilMoisture = await getSoilMoisture();
-//     const soilMoisture = document.getElementById("soil-moisture");
-
-//     soilMoisture.innerHTML = dataSoilMoisture + " %" || 30 + " %";
-//   } catch (err) {
-//     console.log("err", err);
-//   }
-// };
-
-// const getLightIntensity = async () => {
-//   try {
-//     const res = await fetch('/light_intensity');
-//     const data = await res.json();
-//     return data.value;
-//   } catch (error) {
-//     console.log("error", error);
-//   }
-// };
-
-// const renderLightIntensity = async () => {
-//   document.querySelector("#light-intensity").value = "";
-//   try {
-//     const dataLightIntensity = await getLightIntensity();
-//     const lightIntensity = document.getElementById("light-intensity");
-
-//     lightIntensity.innerHTML = dataLightIntensity + " Lux" || 30 + " Lux";
-//   } catch (err) {
-//     console.log("err", err);
-//   }
-// };
-
-// renderTemp();
-// renderAirHumidity();
-// renderSoilMoisture();
-// renderLightIntensity();
 renderNow();
-
 setInterval(() => {
-  // renderTemp();
-  // renderAirHumidity();
-  // renderSoilMoisture();
-  // renderLightIntensity();
   renderNow();
-}, 20000);
+}, 10000);
 
 const changeFanState = async (input) => {
   try {
@@ -250,7 +160,7 @@ function handleFan(checkbox) {
   } else {
     changeFanState(true);
   }
-  console.log(checkbox.checked);
+  renderNow();
 }
 
 function handleWater(checkbox) {
@@ -259,6 +169,7 @@ function handleWater(checkbox) {
   } else {
     changeWaterState(true);
   }
+  renderNow();
 }
 
 function handleLight(checkbox) {
@@ -267,4 +178,5 @@ function handleLight(checkbox) {
   } else {
     changeLightState(true);
   }
+  renderNow();
 }
