@@ -23,6 +23,8 @@ const URL_FAN = IP_SERVER + "fan";
 const URL_WATER_PUMP = IP_SERVER + "water_pump";
 const URL_LIGHT = IP_SERVER + "light";
 
+const URL_NOW = "/now";
+
 const hourEl = document.getElementById("hour");
 const minuteEl = document.getElementById("minutes");
 const secondEl = document.getElementById("seconds");
@@ -54,105 +56,141 @@ function updateClock() {
 
 updateClock();
 
-const getTemp = async () => {
+const getNow = async () => {
   try {
-    const res = await fetch(URL_AIR_TEMPERATURE);
-
+    const res = await fetch(URL_NOW);
     const data = await res.json();
-    return data.value;
+    console.log(data)
+    return data;
   } catch (error) {
     console.log("error", error);
   }
 };
 
-const renderTemp = async () => {
+const renderNow = async () => {
   document.querySelector("#temp").value = "";
-  try {
-    const dataTemp = await getTemp();
-    const temp = document.getElementById("temp");
-
-    temp.innerHTML = dataTemp + "&deg;C" || 30 + "&deg;C";
-  } catch (err) {
-    console.log("err", err);
-  }
-};
-
-const getAirHudmity = async () => {
-  try {
-    const res = await fetch('/air_humidity');
-    const data = await res.json();
-    return data.value;
-  } catch (error) {
-    console.log("error", error);
-  }
-};
-
-const renderAirHumidity = async () => {
   document.querySelector("#air-humidity").value = "";
-  try {
-    const dataHumidity = await getAirHudmity();
-    const humidity = document.getElementById("air-humidity");
-
-    humidity.innerHTML = dataHumidity + " %" || 30 + " %";
-  } catch (err) {
-    console.log("err", err);
-  }
-};
-
-const getSoilMoisture = async () => {
-  try {
-    const res = await fetch('/soil_moisture');
-    const data = await res.json();
-    return data.value;
-  } catch (error) {
-    console.log("error", error);
-  }
-};
-
-const renderSoilMoisture = async () => {
   document.querySelector("#soil-moisture").value = "";
-  try {
-    const dataSoilMoisture = await getSoilMoisture();
-    const soilMoisture = document.getElementById("soil-moisture");
-
-    soilMoisture.innerHTML = dataSoilMoisture + " %" || 30 + " %";
-  } catch (err) {
-    console.log("err", err);
-  }
-};
-
-const getLightIntensity = async () => {
-  try {
-    const res = await fetch('/light_intensity');
-    const data = await res.json();
-    return data.value;
-  } catch (error) {
-    console.log("error", error);
-  }
-};
-
-const renderLightIntensity = async () => {
   document.querySelector("#light-intensity").value = "";
   try {
-    const dataLightIntensity = await getLightIntensity();
+    const data = await getNow();
+
+    const temp = document.getElementById("temp");
+    const humidity = document.getElementById("air-humidity");
+    const soilMoisture = document.getElementById("soil-moisture");
     const lightIntensity = document.getElementById("light-intensity");
 
-    lightIntensity.innerHTML = dataLightIntensity + " Lux" || 30 + " Lux";
+    temp.innerHTML = data.air_temperature + "&deg;C" || 30 + "&deg;C";
+    humidity.innerHTML = data.air_humidity + " %" || 30 + " %";
+    soilMoisture.innerHTML = data.soil_moisture + " %" || 30 + " %";
+    lightIntensity.innerHTML = data.light_intensity + " Lux" || 30 + " Lux";
+
   } catch (err) {
     console.log("err", err);
   }
 };
 
-renderTemp();
-renderAirHumidity();
-renderSoilMoisture();
-renderLightIntensity();
+// const getTemp = async () => {
+//   try {
+//     const res = await fetch(URL_AIR_TEMPERATURE);
+
+//     const data = await res.json();
+//     return data.value;
+//   } catch (error) {
+//     console.log("error", error);
+//   }
+// };
+
+// const renderTemp = async () => {
+//   document.querySelector("#temp").value = "";
+//   try {
+//     const dataTemp = await getTemp();
+//     const temp = document.getElementById("temp");
+
+//     temp.innerHTML = dataTemp + "&deg;C" || 30 + "&deg;C";
+//   } catch (err) {
+//     console.log("err", err);
+//   }
+// };
+
+// const getAirHudmity = async () => {
+//   try {
+//     const res = await fetch('/air_humidity');
+//     const data = await res.json();
+//     return data.value;
+//   } catch (error) {
+//     console.log("error", error);
+//   }
+// };
+
+// const renderAirHumidity = async () => {
+//   document.querySelector("#air-humidity").value = "";
+//   try {
+//     const dataHumidity = await getAirHudmity();
+//     const humidity = document.getElementById("air-humidity");
+
+//     humidity.innerHTML = dataHumidity + " %" || 30 + " %";
+//   } catch (err) {
+//     console.log("err", err);
+//   }
+// };
+
+// const getSoilMoisture = async () => {
+//   try {
+//     const res = await fetch('/soil_moisture');
+//     const data = await res.json();
+//     return data.value;
+//   } catch (error) {
+//     console.log("error", error);
+//   }
+// };
+
+// const renderSoilMoisture = async () => {
+//   document.querySelector("#soil-moisture").value = "";
+//   try {
+//     const dataSoilMoisture = await getSoilMoisture();
+//     const soilMoisture = document.getElementById("soil-moisture");
+
+//     soilMoisture.innerHTML = dataSoilMoisture + " %" || 30 + " %";
+//   } catch (err) {
+//     console.log("err", err);
+//   }
+// };
+
+// const getLightIntensity = async () => {
+//   try {
+//     const res = await fetch('/light_intensity');
+//     const data = await res.json();
+//     return data.value;
+//   } catch (error) {
+//     console.log("error", error);
+//   }
+// };
+
+// const renderLightIntensity = async () => {
+//   document.querySelector("#light-intensity").value = "";
+//   try {
+//     const dataLightIntensity = await getLightIntensity();
+//     const lightIntensity = document.getElementById("light-intensity");
+
+//     lightIntensity.innerHTML = dataLightIntensity + " Lux" || 30 + " Lux";
+//   } catch (err) {
+//     console.log("err", err);
+//   }
+// };
+
+// renderTemp();
+// renderAirHumidity();
+// renderSoilMoisture();
+// renderLightIntensity();
+renderNow();
 
 setInterval(() => {
-  renderTemp();
-  renderAirHumidity();
-  renderSoilMoisture();
-  renderLightIntensity();
+  // renderTemp();
+  // renderAirHumidity();
+  // renderSoilMoisture();
+  // renderLightIntensity();
+  renderNow();
 }, 20000);
 
 const changeFanState = async (input) => {
